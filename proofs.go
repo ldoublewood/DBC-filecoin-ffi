@@ -9,6 +9,7 @@ import "C"
 import (
 	"os"
 	"runtime"
+	"strings"
 	"unsafe"
 
 	"github.com/filecoin-project/go-address"
@@ -21,6 +22,15 @@ import (
 
 	"github.com/filecoin-project/filecoin-ffi/generated"
 )
+
+var snarkCx []string
+
+func init() {
+	cxlist := os.Getenv("CX_SNARK_URL_LIST")
+	if len(cxlist) != 0 {
+		snarkCx = strings.Split(cxlist, ",")
+	}
+}
 
 // VerifySeal returns true if the sealing operation from which its inputs were
 // derived was valid, and false if not.
